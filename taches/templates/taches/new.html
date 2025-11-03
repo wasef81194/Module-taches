@@ -1,17 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nouvelle tâche</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block content %}
     <h1>Ajouter une tâche</h1>
+    <a href="/">Retour</a>
     <form method="POST" class="form-tache-add">
+        <div class="message">
+            {% if response.bool == True %}
+                <div class="message-success">
+                    {{response.message}}
+                </div>
+            {% else %}
+                <div class="message-danger">
+                    {{response.message}}
+                </div>
+            {% endif %}
+        </div>
         {% csrf_token %}
 
         {{form}}
         <button type="submit">Valider</button>
     </form>
-</body>
-</html>
+{% endblock %}

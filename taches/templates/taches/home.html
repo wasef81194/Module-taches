@@ -1,13 +1,68 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Taches</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block content %}
     <h1>Taches</h1>
     <a href="/taches/new">Ajouter une tâche</a>
-    
-</body>
-</html>
+    <table>
+        <thead>
+            <th>
+                Title
+            </th>
+            <th>
+                Description
+            </th>
+            <th>
+                Date d'ajout
+            </th>
+            <th>
+                Action
+            </th>
+        </thead>
+        <tbody>
+            {% for tache in taches %}
+            <tr id="tache-{{ tache.id }}">
+                <td>
+                    {{tache.title}}
+                </td>
+                <td>
+                    {{tache.description|slice:":50"}}
+                </td>
+                <td>
+                    {{tache.dateAdd|date:"j M Y" }}
+                </td>
+                <td>
+                    <button class="delete-tache" data-id={{tache.id}} data-csrf={{csrf_token}}> Del </button> Edit
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
+{% block javascript %}
+    <script>
+        $(document).ready(function(){
+            $(".delete-tache").click(function(){
+                if (!confirm('Etes vous sur de vouloir supprimer cette tâche ?')) {
+                   return None
+                }
+                var id = $(this).data('id');
+                //AJAX
+                $.ajax({
+                    headers: { "X-CSRFToken":  $(this).data('csrf') },
+                    url : 'tache/delete',
+                    type : 'POST', 
+                    data : {'id' : id}, 
+                    dataType: "JSON",
+                    success : function(data){
+                            $('#tache-'+id).remove()
+                    },
+                    error:function(msg){
+                        console.log(msg); 
+                    }
+                });
+                console.log("Supp")
+            })
+        })
+    </script>
+{% endblock %}

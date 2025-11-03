@@ -1,0 +1,17 @@
+<!-- dans le fichier base.html ou équivalent -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Taches</title>
+    <!-- Ajoute jQuery ici si tu veux que ce soit global -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.js" integrity="sha512-+k1pnlgt4F1H8L7t3z95o3/KO+o78INEcXTbnoJQ/F2VqDVhWoaiVml/OEHv9HsVgxUaVW+IbiZPUJQfF/YxZw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<body>
+    <!-- Contenu de la page -->
+    {% block content %}{% endblock %}
+    <!-- Tu peux aussi ajouter ton script personnalisé ici -->
+    
+   
+    {% block javascript %}
+    {% endblock %}
+</body>
+</html>
